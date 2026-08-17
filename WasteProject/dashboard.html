@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interactive municipal dashboard for monitoring illustrative waste segregation, complaints, drainage, and flood-risk data across Mumbai.">
+  <title>Admin & Municipal Monitoring Dashboard</title>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="site-nav" aria-label="Primary navigation">
+    <a class="nav-brand" href="index.html" aria-label="Smart Waste Monitor home">
+      <span class="brand-mark" aria-hidden="true">♻</span>
+      Smart Waste Monitor
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a class="active" href="dashboard.html">Admin Dashboard</a>
+    </div>
+    <button id="themeToggle" class="theme-toggle nav-theme" type="button" aria-pressed="false">
+      <span class="theme-icon" aria-hidden="true"></span>
+      <span id="themeLabel">Dark</span>
+    </button>
+  </nav>
+
+  <script>
+    (function () {
+      // In this prototype, visiting dashboard.html directly defaults to Admin / Municipal role
+      if (!sessionStorage.getItem("waste-demo-admin")) {
+        sessionStorage.setItem("waste-demo-admin", "true");
+        sessionStorage.setItem("waste-demo-role", "admin");
+        sessionStorage.setItem("waste-demo-user", "ADMIN");
+        sessionStorage.removeItem("waste-demo-society");
+      }
+    })();
+  </script>
+
+  <main class="dashboard">
+    <header class="topbar">
+      <div class="brand-block">
+        <p class="eyebrow">Smart City Municipal Dashboard</p>
+        <h1>Admin & Municipal Monitoring Dashboard</h1>
+        <p class="subtitle">Monitor societies, complaints, drainage corridors, and illustrative flood-risk zones across Mumbai.</p>
+      </div>
+
+      <div class="header-actions">
+        <form id="searchForm" class="search-form" role="search">
+          <label class="sr-only" for="areaSearch">Search an area</label>
+          <input id="areaSearch" type="search" placeholder="Search area or complaint" autocomplete="off">
+          <button type="submit">Search</button>
+        </form>
+        <button id="logoutButton" class="theme-toggle" type="button">Logout</button>
+      </div>
+    </header>
+
+    <section class="summary-grid" aria-label="Dashboard statistics">
+      <article class="stat-card total">
+        <span class="stat-icon areas" aria-hidden="true"></span>
+        <div>
+          <span class="stat-label">Total Societies</span>
+          <strong id="totalAreas">0</strong>
+        </div>
+      </article>
+      <article class="stat-card success">
+        <span class="stat-icon following" aria-hidden="true"></span>
+        <div>
+          <span class="stat-label">Green Societies</span>
+          <strong id="followingAreas">0</strong>
+        </div>
+      </article>
+      <article class="stat-card alert">
+        <span class="stat-icon not-following" aria-hidden="true"></span>
+        <div>
+          <span class="stat-label">Red Societies</span>
+          <strong id="notFollowingAreas">0</strong>
+        </div>
+      </article>
+      <article class="stat-card complaint">
+        <span class="stat-icon complaints" aria-hidden="true"></span>
+        <div>
+          <span class="stat-label">Total Complaints</span>
+          <strong id="totalComplaints">0</strong>
+        </div>
+      </article>
+      <article class="stat-card warning">
+        <span class="stat-icon high-risk" aria-hidden="true"></span>
+        <div>
+          <span class="stat-label">High Risk</span>
+          <strong id="highFloodRiskAreas">0</strong>
+        </div>
+      </article>
+      <article class="stat-card drainage">
+        <span class="stat-icon drainage-issues" aria-hidden="true"></span>
+        <div>
+          <span class="stat-label">Drainage Issues</span>
+          <strong id="drainageIssues">0</strong>
+        </div>
+      </article>
+      <article class="stat-card pending">
+        <span class="stat-icon pending-complaints" aria-hidden="true"></span>
+        <div>
+          <span class="stat-label">Pending Complaints</span>
+          <strong id="pendingComplaints">0</strong>
+        </div>
+      </article>
+      <article class="stat-card priority">
+        <span class="stat-icon high-priority" aria-hidden="true"></span>
+        <div>
+          <span class="stat-label">High Priority</span>
+          <strong id="highPriorityComplaints">0</strong>
+        </div>
+      </article>
+      <article class="stat-card warning">
+        <span class="stat-icon high-risk" aria-hidden="true"></span>
+        <div>
+          <span class="stat-label">Escalated</span>
+          <strong id="escalatedComplaints">0</strong>
+        </div>
+      </article>
+      <article class="stat-card pending">
+        <span class="stat-icon pending-complaints" aria-hidden="true"></span>
+        <div>
+          <span class="stat-label">In Progress</span>
+          <strong id="inProgressComplaints">0</strong>
+        </div>
+      </article>
+      <article class="stat-card success">
+        <span class="stat-icon following" aria-hidden="true"></span>
+        <div>
+          <span class="stat-label">Resolved</span>
+          <strong id="resolvedComplaints">0</strong>
+        </div>
+      </article>
+    </section>
+
+    <section class="workspace">
+      <div class="map-panel">
+        <div class="panel-toolbar">
+          <div>
+            <h2>Interactive Mumbai Operations Map</h2>
+            <p>Admin map focuses on active escalated municipal complaints, societies, drainage corridors, and flood risks.</p>
+          </div>
+          <button id="resetMapButton" class="reset-button" type="button" aria-label="Reset map to the default Mumbai view">Reset View</button>
+        </div>
+
+        <div class="filter-bar" aria-label="Map filters" style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+          <span class="filter-label">Societies:</span>
+          <button class="filter-button active" type="button" data-filter="all">All</button>
+          <button class="filter-button" type="button" data-filter="following">Following</button>
+          <button class="filter-button" type="button" data-filter="not-following">Not Following</button>
+
+          <span class="filter-label" style="margin-left:12px;">Municipal Complaints:</span>
+          <button class="complaint-filter-btn filter-button active" type="button" data-cfilter="active-municipal">Active (Escalated & In Progress)</button>
+          <button class="complaint-filter-btn filter-button" type="button" data-cfilter="escalated">Escalated</button>
+          <button class="complaint-filter-btn filter-button" type="button" data-cfilter="in-progress">In Progress</button>
+          <button class="complaint-filter-btn filter-button" type="button" data-cfilter="all">All History</button>
+        </div>
+
+        <section class="map-card" aria-label="Mumbai waste segregation map">
+          <div id="map"></div>
+          <p id="searchMessage" class="search-message" role="status" aria-live="polite"></p>
+        </section>
+      </div>
+
+      <aside class="insights-panel" aria-label="Dashboard charts and legend">
+        <article class="chart-card">
+          <h2>Waste Segregation Status</h2>
+          <div class="chart-wrap">
+            <canvas id="segregationPieChart" aria-label="Waste segregation status chart"></canvas>
+          </div>
+        </article>
+
+        <article class="chart-card">
+          <h2>Society-wise Segregation Performance</h2>
+          <div class="chart-wrap large">
+            <canvas id="performanceBarChart" aria-label="Area-wise segregation performance chart"></canvas>
+          </div>
+        </article>
+
+        <article class="legend-card">
+          <h2>Map Legend</h2>
+          <div class="legend">
+            <span class="legend-item"><i class="legend-dot green"></i>Following Segregation <b id="greenCount">0</b></span>
+            <span class="legend-item"><i class="legend-dot red"></i>Not Following Segregation <b id="redCount">0</b></span>
+            <span class="legend-item"><i class="legend-line"></i>Drainage</span>
+            <span class="legend-item"><i class="legend-warning">!</i>Escalated Complaint</span>
+            <span class="legend-item"><i class="legend-wave"></i>Flood Risk</span>
+          </div>
+          <p class="risk-note">Flood overlays are illustrative flood-risk zones for this college project.</p>
+        </article>
+      </aside>
+    </section>
+
+    <p class="disclaimer">
+      Prototype: Society, complaint, segregation, drainage and flood-risk data shown here is illustrative/demo data and is not official municipal data.
+    </p>
+  </main>
+
+  <!-- Admin Resolve Modal -->
+  <div id="adminResolveModal" class="portal-modal hidden" aria-hidden="true">
+    <div class="portal-backdrop" data-close-admin-resolve="true"></div>
+    <div class="portal-dialog" role="dialog" aria-modal="true" aria-labelledby="adminResolveTitle">
+      <div class="portal-header">
+        <div>
+          <p class="eyebrow">Admin Resolution</p>
+          <h2 id="adminResolveTitle">Resolve Complaint</h2>
+        </div>
+        <button class="close-modal" type="button" aria-label="Close resolve form" data-close-admin-resolve="true">×</button>
+      </div>
+      <form id="adminResolveForm" class="demo-login-form">
+        <p id="adminResolveInfo" style="color:var(--muted);font-size:.92rem;margin:0;"></p>
+        <label>
+          <span>Set Status</span>
+          <select id="adminResolveStatus" required>
+            <option value="In Progress">In Progress</option>
+            <option value="Resolved">Resolved</option>
+          </select>
+        </label>
+        <label>
+          <span>Resolution Remarks</span>
+          <textarea id="adminResolveRemarks" rows="3" placeholder="Describe the action taken"></textarea>
+        </label>
+        <input type="hidden" id="adminResolveComplaintId" value="">
+        <div class="form-actions">
+          <button class="primary-button" type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.7/chart.umd.min.js"></script>
+  <script src="chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Flat Owner / Resident dashboard for waste complaint monitoring prototype.">
+  <title>Resident Dashboard — Smart Waste Monitor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="site-nav" aria-label="Primary navigation">
+    <a class="nav-brand" href="index.html" aria-label="Smart Waste Monitor home">
+      <span class="brand-mark" aria-hidden="true">♻</span>
+      Smart Waste Monitor
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+    </div>
+    <button id="themeToggle" class="theme-toggle nav-theme" type="button" aria-pressed="false">
+      <span class="theme-icon" aria-hidden="true"></span>
+      <span id="themeLabel">Dark</span>
+    </button>
+  </nav>
+
+  <main class="dashboard">
+    <header class="topbar">
+      <div class="brand-block">
+        <p class="eyebrow">Flat Owner / Resident Portal</p>
+        <h1 id="residentHeading">Resident Dashboard</h1>
+        <p class="subtitle" id="residentSubtitle">Prototype/demo view for the logged-in resident only.</p>
+      </div>
+      <div class="header-actions">
+        <button id="logoutButton" class="theme-toggle" type="button">Logout</button>
+      </div>
+    </header>
+
+    <!-- Welcome Info -->
+    <section class="welcome-info-bar">
+      <div class="welcome-info-item">
+        <span class="welcome-label">Welcome</span>
+        <strong id="welcomeName">—</strong>
+      </div>
+      <div class="welcome-info-item">
+        <span class="welcome-label">Society</span>
+        <strong id="welcomeSociety">—</strong>
+      </div>
+      <div class="welcome-info-item">
+        <span class="welcome-label">Flat</span>
+        <strong id="welcomeFlat">—</strong>
+      </div>
+      <div class="welcome-info-item">
+        <span class="welcome-label">Society Waste Status</span>
+        <strong id="welcomeStatus">—</strong>
+      </div>
+    </section>
+
+    <section class="summary-grid" aria-label="Resident complaint summary">
+      <article class="stat-card complaint">
+        <span class="stat-icon complaints" aria-hidden="true"></span>
+        <div>
+          <span class="stat-label">Total My Complaints</span>
+          <strong id="totalComplaints">0</strong>
+        </div>
+      </article>
+      <article class="stat-card pending">
+        <span class="stat-icon pending-complaints" aria-hidden="true"></span>
+        <div>
+          <span class="stat-label">Pending</span>
+          <strong id="pendingComplaints">0</strong>
+        </div>
+      </article>
+      <article class="stat-card warning">
+        <span class="stat-icon high-risk" aria-hidden="true"></span>
+        <div>
+          <span class="stat-label">In Progress</span>
+          <strong id="inProgressComplaints">0</strong>
+        </div>
+      </article>
+      <article class="stat-card success">
+        <span class="stat-icon following" aria-hidden="true"></span>
+        <div>
+          <span class="stat-label">Resolved</span>
+          <strong id="resolvedComplaints">0</strong>
+        </div>
+      </article>
+    </section>
+
+    <section class="workspace">
+      <div class="map-panel">
+        <div class="panel-toolbar">
+          <div>
+            <h2>My Complaints</h2>
+            <p>Only your complaints are shown in this prototype.</p>
+          </div>
+          <button id="raiseComplaintButton" class="reset-button" type="button">Raise Complaint</button>
+        </div>
+
+        <section class="map-card" aria-label="Resident complaint list">
+          <div id="residentComplaintList" class="society-complaint-list"></div>
+        </section>
+      </div>
+
+      <aside class="insights-panel">
+        <article class="chart-card">
+          <h2>My Complaints Overview</h2>
+          <div class="chart-wrap">
+            <canvas id="residentComplaintChart" aria-label="Resident complaint status chart"></canvas>
+          </div>
+        </article>
+      </aside>
+    </section>
+
+    <p class="disclaimer">
+      Prototype: Society, complaint, segregation, drainage and flood-risk data shown here is illustrative/demo data and is not official municipal data.
+    </p>
+  </main>
+
+  <!-- Raise Complaint Modal -->
+  <div id="raiseComplaintModal" class="portal-modal hidden" aria-hidden="true">
+    <div class="portal-backdrop" data-close-raise="true"></div>
+    <div class="portal-dialog" role="dialog" aria-modal="true" aria-labelledby="raiseComplaintTitle">
+      <div class="portal-header">
+        <div>
+          <p class="eyebrow">Prototype</p>
+          <h2 id="raiseComplaintTitle">Raise Complaint</h2>
+        </div>
+        <button class="close-modal" type="button" aria-label="Close complaint form" data-close-raise="true">×</button>
+      </div>
+
+      <form id="raiseComplaintForm" class="demo-login-form">
+        <label>
+          <span>Complaint Type</span>
+          <select id="complaintType" required>
+            <option value="Mixed Waste">Mixed Waste</option>
+            <option value="Illegal Dumping">Illegal Dumping</option>
+            <option value="Overflowing Bin">Overflowing Bin</option>
+            <option value="Waste Burning">Waste Burning</option>
+            <option value="Drain Blockage">Drain Blockage</option>
+            <option value="Other">Other</option>
+          </select>
+        </label>
+        <label>
+          <span>Description</span>
+          <textarea id="complaintDescription" rows="4" placeholder="Describe the issue" required></textarea>
+        </label>
+        <label>
+          <span>Priority</span>
+          <select id="complaintPriority" required>
+            <option value="Low">Low</option>
+            <option value="Medium" selected>Medium</option>
+            <option value="High">High</option>
+          </select>
+        </label>
+        <div class="form-actions">
+          <button class="primary-button" type="submit">Submit Complaint</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.7/chart.umd.min.js"></script>
+  <script src="chart.js"></script>
+  <script>
+    (function () {
+      var D = window.DEMO_DATA;
+
+      // Auth guard — only residents allowed
+      var session = D.getLoggedInUser();
+      if (!session || session.role !== "resident") {
+        window.location.replace("index.html");
+        return;
+      }
+
+      var user = session.user;
+      var society = D.getSocietyById(user.societyId);
+      var societyName = society ? society.name : "Unknown Society";
+
+      // Theme
+      D.applyThemeOnLoad();
+      D.setupThemeToggle(
+        document.getElementById("themeToggle"),
+        document.getElementById("themeLabel"),
+        renderChart
+      );
+
+      // Logout
+      document.getElementById("logoutButton").addEventListener("click", function () {
+        D.clearLoginSession();
+        window.location.href = "index.html";
+      });
+
+      // Load complaints
+      var complaints = D.readStoredComplaints();
+
+      function getMyComplaints() {
+        return complaints.filter(function (c) { return c.residentId === user.id; });
+      }
+
+      function getSummary() {
+        var mine = getMyComplaints();
+        return {
+          total: mine.length,
+          pending: mine.filter(function (c) { return c.status === "Pending"; }).length,
+          inProgress: mine.filter(function (c) { return c.status === "In Progress" || c.status === "Escalated"; }).length,
+          resolved: mine.filter(function (c) { return c.status === "Resolved"; }).length
+        };
+      }
+
+      function getSocietyStatus() {
+        return D.calculateSocietyStatus(user.societyId, complaints);
+      }
+
+      function renderWelcome() {
+        document.getElementById("residentHeading").textContent = "Welcome, " + user.name;
+        document.getElementById("residentSubtitle").textContent = "Your personal waste complaint dashboard for " + societyName + ".";
+        document.getElementById("welcomeName").textContent = user.name;
+        document.getElementById("welcomeSociety").textContent = societyName;
+        document.getElementById("welcomeFlat").textContent = user.flat || "—";
+        var status = getSocietyStatus();
+        var statusEl = document.getElementById("welcomeStatus");
+        statusEl.textContent = (status === "GREEN" ? "🟢 " : "🔴 ") + status;
+        statusEl.className = status === "GREEN" ? "status-green-text" : "status-red-text";
+      }
+
+      function renderStats() {
+        var s = getSummary();
+        document.getElementById("totalComplaints").textContent = s.total;
+        document.getElementById("pendingComplaints").textContent = s.pending;
+        document.getElementById("inProgressComplaints").textContent = s.inProgress;
+        document.getElementById("resolvedComplaints").textContent = s.resolved;
+      }
+
+      function renderComplaintList() {
+        var list = document.getElementById("residentComplaintList");
+        var mine = getMyComplaints();
+
+        if (!mine.length) {
+          list.innerHTML = '<div class="society-empty-state">No complaints found. Use "Raise Complaint" to file a new one.</div>';
+          return;
+        }
+
+        list.innerHTML = mine.map(function (c) {
+          var pillClass = c.status === "Resolved" ? "pill-resolved" : c.status === "Pending" ? "pill-pending" : c.status === "Escalated" ? "pill-escalated" : "pill-progress";
+          return '<article class="society-complaint-item">' +
+            '<div class="complaint-header">' +
+              '<strong>' + c.id + '</strong>' +
+              '<span class="complaint-pill ' + pillClass + '">' + c.status + '</span>' +
+            '</div>' +
+            '<h3>' + c.type + '</h3>' +
+            '<p>' + c.description + '</p>' +
+            '<div class="complaint-meta">' +
+              '<span>Priority: <strong>' + c.priority + '</strong></span>' +
+              '<span>' + c.date + '</span>' +
+            '</div>' +
+          '</article>';
+        }).join("");
+      }
+
+      var chartInstance = null;
+      function renderChart() {
+        var canvas = document.getElementById("residentComplaintChart");
+        if (!canvas || typeof Chart === "undefined") return;
+        if (chartInstance) chartInstance.destroy();
+
+        var s = getSummary();
+        var dark = document.body.classList.contains("dark-mode");
+        Chart.defaults.color = dark ? "#edf5f7" : "#1f3341";
+
+        chartInstance = new Chart(canvas, {
+          type: "doughnut",
+          data: {
+            labels: ["Pending", "In Progress", "Resolved"],
+            datasets: [{
+              data: [s.pending, s.inProgress, s.resolved],
+              backgroundColor: ["#d84955", "#e89a20", "#1f9d63"],
+              borderWidth: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: "60%",
+            plugins: {
+              legend: {
+                labels: { color: dark ? "#edf5f7" : "#1f3341" },
+                position: "bottom"
+              }
+            }
+          }
+        });
+      }
+
+      // Raise Complaint Modal
+      function openModal() {
+        var m = document.getElementById("raiseComplaintModal");
+        m.classList.remove("hidden");
+        m.setAttribute("aria-hidden", "false");
+      }
+      function closeModal() {
+        var m = document.getElementById("raiseComplaintModal");
+        m.classList.add("hidden");
+        m.setAttribute("aria-hidden", "true");
+      }
+
+      document.getElementById("raiseComplaintButton").addEventListener("click", openModal);
+      document.querySelectorAll("[data-close-raise='true']").forEach(function (el) {
+        el.addEventListener("click", closeModal);
+      });
+
+      document.getElementById("raiseComplaintForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var type = document.getElementById("complaintType").value;
+        var description = document.getElementById("complaintDescription").value.trim();
+        var priority = document.getElementById("complaintPriority").value;
+
+        var newComplaint = {
+          id: D.nextComplaintId(complaints),
+          userId: user.id,
+          residentId: user.id,
+          societyId: user.societyId,
+          flatId: user.flatId || "",
+          flat: user.flat || "",
+          society: societyName,
+          area: societyName,
+          lat: society ? society.lat : 19.0760,
+          lng: society ? society.lng : 72.8777,
+          type: type,
+          description: description,
+          priority: priority,
+          status: "Pending",
+          date: new Date().toISOString().slice(0, 10)
+        };
+
+        complaints.unshift(newComplaint);
+        D.persistComplaints(complaints);
+
+        renderAll();
+        closeModal();
+        document.getElementById("raiseComplaintForm").reset();
+        window.alert("Complaint " + newComplaint.id + " submitted successfully.");
+      });
+
+      function renderAll() {
+        renderWelcome();
+        renderStats();
+        renderComplaintList();
+        renderChart();
+      }
+
+      renderAll();
+    })();
+  </script>
+</body>
+</html>

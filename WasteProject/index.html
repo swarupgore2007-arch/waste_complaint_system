@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Smart Waste Segregation and Drainage Monitoring System prototype home page.">
+  <title>Smart Waste Segregation & Drainage Monitoring System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="site-nav" aria-label="Primary navigation">
+    <a class="nav-brand" href="index.html" aria-label="Smart Waste Monitor home">
+      <span class="brand-mark" aria-hidden="true"><i class="fa-solid fa-recycle"></i></span>
+      Smart Waste Monitor
+    </a>
+    <div class="nav-links">
+      <a class="active" href="index.html">Home</a>
+      <a href="#why">How It Works</a>
+      <a id="dashboardLoginNav" href="#">Admin Dashboard</a>
+      <a id="loginNavLink" href="#">Login</a>
+    </div>
+    <button id="themeToggle" class="theme-toggle nav-theme" type="button" aria-pressed="false">
+      <span class="theme-icon" aria-hidden="true"></span>
+      <span id="themeLabel">Dark</span>
+    </button>
+  </nav>
+
+  <main class="home-page">
+    <section class="hero-section">
+      <div class="hero-copy">
+        <p class="eyebrow">College Group Project Prototype</p>
+        <h1>Smarter Waste Management for Cleaner Communities</h1>
+        <p class="hero-subtitle">An interactive prototype for monitoring waste segregation, drainage conditions, complaints, and flood-risk areas.</p>
+        <div class="hero-actions">
+          <button id="loginButton" class="primary-button" type="button">Login</button>
+          <button id="exploreDashboardButton" class="secondary-button" type="button">Explore Dashboard</button>
+          <a class="secondary-button" href="#problem">Learn More</a>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-label="Proper waste segregation project visual">
+        <figure class="home-image-frame hero-image-frame">
+          <img src="images/proper-segregation.jpg" alt="Properly separated waste bins showing organized waste segregation">
+          <div class="preview-panel">
+            <strong>Live Monitoring</strong>
+            <span>20 areas tracked</span>
+            <span>8 complaints mapped</span>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <section class="content-section intro-section" id="why">
+      <div class="section-heading">
+        <p class="eyebrow">Why This Matters</p>
+        <h2>Cleaner cities need clearer monitoring.</h2>
+      </div>
+      <p>
+        Improper waste segregation and mixed waste disposal make recycling and processing more difficult.
+        Garbage accumulation can create unhealthy surroundings, while waste entering drains can cause blockages and waterlogging.
+        These problems can increase localized flood risk and make it harder for authorities to identify which areas need attention first.
+      </p>
+    </section>
+
+    <section class="content-section" id="problem">
+      <div class="section-heading">
+        <p class="eyebrow">The Problem</p>
+        <h2>Common urban waste-management challenges</h2>
+      </div>
+      <div class="problem-image-grid">
+        <figure class="home-image-frame">
+          <img src="images/mixed-waste.jpeg" alt="Mixed waste disposal showing improperly segregated garbage">
+          <figcaption>Improper mixed waste disposal</figcaption>
+        </figure>
+        <figure class="home-image-frame">
+          <img src="images/blocked-drainage.jpg" alt="Blocked and polluted drainage channel affected by waste">
+          <figcaption>Blocked drainage and waterlogging risk</figcaption>
+        </figure>
+      </div>
+      <div class="home-card-grid five-grid">
+        <article class="home-card">
+          <span class="card-icon"><i class="fa-solid fa-recycle" aria-hidden="true"></i></span>
+          <h3>Improper Segregation</h3>
+          <p>Wet and dry waste are often mixed, making recycling and processing difficult.</p>
+        </article>
+        <article class="home-card">
+          <span class="card-icon"><i class="fa-solid fa-trash" aria-hidden="true"></i></span>
+          <h3>Waste Accumulation</h3>
+          <p>Uncollected or improperly disposed waste can create unhealthy surroundings.</p>
+        </article>
+        <article class="home-card">
+          <span class="card-icon"><i class="fa-solid fa-water" aria-hidden="true"></i></span>
+          <h3>Blocked Drainage</h3>
+          <p>Waste entering drainage systems can contribute to blockages and waterlogging.</p>
+        </article>
+        <article class="home-card">
+          <span class="card-icon"><i class="fa-solid fa-house-flood-water" aria-hidden="true"></i></span>
+          <h3>Flood Risk</h3>
+          <p>Poor drainage and waste accumulation can increase the risk of localized flooding.</p>
+        </article>
+        <article class="home-card">
+          <span class="card-icon"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></span>
+          <h3>Limited Monitoring</h3>
+          <p>It can be difficult to identify and prioritize problem areas efficiently.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="section-heading">
+        <p class="eyebrow">Our Proposed Solution</p>
+        <h2>A simple geospatial monitoring prototype</h2>
+      </div>
+      <figure class="home-image-frame solution-image-frame">
+        <img src="images/waste-collection.jpg" alt="Organized waste collection and management activity">
+        <figcaption>Organized collection supports cleaner waste-management workflows.</figcaption>
+      </figure>
+      <div class="home-card-grid five-grid">
+        <article class="home-card feature-card">
+          <span class="card-icon"><i class="fa-solid fa-recycle" aria-hidden="true"></i></span>
+          <h3>Waste Segregation Monitoring</h3>
+          <p>Visualize areas following and not following waste segregation.</p>
+        </article>
+        <article class="home-card feature-card">
+          <span class="card-icon"><i class="fa-solid fa-water" aria-hidden="true"></i></span>
+          <h3>Drainage Monitoring</h3>
+          <p>Visualize drainage networks and identify areas requiring attention.</p>
+        </article>
+        <article class="home-card feature-card">
+          <span class="card-icon"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></span>
+          <h3>Complaint Mapping</h3>
+          <p>Locate and categorize waste-related complaints on the map.</p>
+        </article>
+        <article class="home-card feature-card">
+          <span class="card-icon"><i class="fa-solid fa-house-flood-water" aria-hidden="true"></i></span>
+          <h3>Flood Risk Visualization</h3>
+          <p>Highlight illustrative areas with different levels of flood risk.</p>
+        </article>
+        <article class="home-card feature-card">
+          <span class="card-icon"><i class="fa-solid fa-chart-column" aria-hidden="true"></i></span>
+          <h3>Data Visualization</h3>
+          <p>Use charts and statistics to understand waste-management performance.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-section process-section">
+      <div class="section-heading">
+        <p class="eyebrow">How It Works</p>
+        <h2>From sample data to actionable insights</h2>
+      </div>
+      <div class="process-flow" aria-label="System workflow">
+        <div class="process-step"><strong>01</strong><span>Collect Data</span></div>
+        <span class="process-arrow" aria-hidden="true">-></span>
+        <div class="process-step"><strong>02</strong><span>Visualize on Map</span></div>
+        <span class="process-arrow" aria-hidden="true">-></span>
+        <div class="process-step"><strong>03</strong><span>Identify Problem Areas</span></div>
+        <span class="process-arrow" aria-hidden="true">-></span>
+        <div class="process-step"><strong>04</strong><span>Prioritize Action</span></div>
+      </div>
+      <p class="section-note">The prototype uses organized sample data to display map layers, status markers, analytics charts, and priority indicators in one dashboard.</p>
+    </section>
+
+    <section class="content-section dashboard-preview-section">
+      <div class="section-heading">
+        <p class="eyebrow">Dashboard Preview</p>
+        <h2>Explore the Monitoring Dashboard</h2>
+      </div>
+      <div class="dashboard-preview-card">
+        <div class="mini-dashboard">
+          <div class="mini-map">
+            <span class="mini-line"></span>
+            <span class="mini-marker mini-green"></span>
+            <span class="mini-marker mini-red"></span>
+            <span class="mini-marker mini-warning">!</span>
+            <span class="mini-flood"></span>
+          </div>
+          <div class="mini-analytics">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <div class="preview-copy">
+          <h3>Interactive monitoring in one place</h3>
+          <div class="preview-list">
+            <span><i class="legend-dot green"></i> Waste Segregation Areas</span>
+            <span><i class="legend-dot red"></i> Non-Compliant Areas</span>
+            <span><i class="legend-line"></i> Drainage Network</span>
+            <span><i class="legend-warning">!</i> Complaints</span>
+            <span><i class="legend-wave"></i> Flood Risk</span>
+            <span><i class="mini-chart-icon"></i> Analytics</span>
+          </div>
+          <a class="primary-button" href="dashboard.html">Open Interactive Dashboard -></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section sdg-section">
+      <div class="section-heading">
+        <p class="eyebrow">Supporting Sustainable Development</p>
+        <h2>Designed around cleaner community goals</h2>
+      </div>
+      <div class="sdg-grid">
+        <article class="sdg-card">
+          <strong>SDG 11</strong>
+          <span>Sustainable Cities and Communities</span>
+        </article>
+        <article class="sdg-card">
+          <strong>SDG 12</strong>
+          <span>Responsible Consumption and Production</span>
+        </article>
+      </div>
+      <p class="section-note">Better waste segregation and monitoring can support the project's intended contribution toward cleaner, more organized, and more sustainable communities.</p>
+    </section>
+
+    <section class="content-section future-section">
+      <div class="future-card">
+        <div>
+          <p class="eyebrow">Sustainable Future</p>
+          <h2>Cleaner surroundings are the goal.</h2>
+          <p class="section-note">The proposed system is designed to help present waste, drainage, complaint, and risk information clearly so problem areas can be understood faster in a demo monitoring workflow.</p>
+        </div>
+        <figure class="home-image-frame future-image-frame">
+          <img src="images/clean-environment.jpg" alt="Clean green environment representing the goal of cleaner communities">
+        </figure>
+      </div>
+    </section>
+
+    <section class="content-section about-section" id="about">
+      <div class="section-heading">
+        <p class="eyebrow">About The Project</p>
+        <h2>About This Prototype</h2>
+      </div>
+      <p>
+        This project is a prototype demonstrating how geospatial visualization and data analytics could be used to monitor waste segregation, drainage, complaints, and flood-risk conditions.
+        The information displayed in this prototype is illustrative/demo data and is not official municipal data.
+      </p>
+    </section>
+
+    <section class="content-section team-section">
+      <div class="section-heading">
+        <p class="eyebrow">Project Team</p>
+        <h2>Group members</h2>
+      </div>
+      <div class="team-grid">
+        <article class="team-card"><h3>Member 1</h3><p>Role: Research & Problem Analysis</p></article>
+        <article class="team-card"><h3>Member 2</h3><p>Role: Frontend Development</p></article>
+        <article class="team-card"><h3>Member 3</h3><p>Role: Mapping & Data Visualization</p></article>
+        <article class="team-card"><h3>Member 4</h3><p>Role: Documentation & Presentation</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <strong>Smart Waste Segregation & Drainage Monitoring System</strong>
+      <p>College Group Project Prototype</p>
+    </div>
+    <nav aria-label="Footer navigation">
+      <a href="index.html">Home</a>
+      <a href="#" id="footerDashboardLink">Admin Dashboard</a>
+      <a href="#about">About</a>
+    </nav>
+    <p class="footer-disclaimer">Demo-data disclaimer: Information shown in this prototype is illustrative/demo data and should not be treated as official municipal data.</p>
+  </footer>
+
+  <div id="loginModal" class="portal-modal hidden" aria-hidden="true">
+    <div class="portal-backdrop" data-close-login="true"></div>
+    <div class="portal-dialog" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle">
+      <div class="portal-header">
+        <div>
+          <p class="eyebrow">Prototype Access</p>
+          <h2 id="loginModalTitle">Access the Smart Waste Management System</h2>
+        </div>
+        <button class="close-modal" type="button" aria-label="Close login modal" data-close-login="true">×</button>
+      </div>
+
+      <div id="portalSelection" class="portal-selection">
+        <button class="portal-option portal-option-card" type="button" data-portal="resident">
+          <span class="portal-option-icon">🏠</span>
+          <span class="portal-option-text">
+            <strong>Flat Owner / Resident</strong>
+            <span>Raise and track waste-management complaints.</span>
+          </span>
+        </button>
+        <button class="portal-option portal-option-card" type="button" data-portal="secretary">
+          <span class="portal-option-icon">🏢</span>
+          <span class="portal-option-text">
+            <strong>Society Secretary</strong>
+            <span>Manage society, residents and complaints.</span>
+          </span>
+        </button>
+        <button class="portal-option portal-option-card" type="button" data-portal="admin">
+          <span class="portal-option-icon">🏛️</span>
+          <span class="portal-option-text">
+            <strong>Admin / Municipal Authority</strong>
+            <span>Monitor societies, complaints and city-level conditions.</span>
+          </span>
+        </button>
+      </div>
+
+        <form id="residentLoginForm" class="demo-login-form hidden" autocomplete="off">
+        <h3>Flat Owner / Resident Login</h3>
+        <label>
+          <span>Username / Email / Phone</span>
+          <input id="residentIdentifier" type="text" name="identifier" placeholder="Enter username, email or phone" required>
+        </label>
+        <label>
+          <span>Password</span>
+          <input id="residentPassword" type="password" name="password" placeholder="Enter demo password" required>
+        </label>
+        <div class="demo-credentials-box">
+          <strong>DEMO Resident Accounts</strong>
+          <p>sneha.a101 / demo123 (or sneha@example.com) — ABC Heights, A-101</p>
+          <p>rahul.a203 / demo123 (or rahul@example.com) — Shree Ganesh, A-203</p>
+          <p>priya.b104 / demo123 (or priya@example.com) — Green Valley, B-104</p>
+          <p>amit.c302 / demo123 (or amit@example.com) — Laxmi Residency, C-302</p>
+          <p style="margin-top:6px; color:var(--green); font-size:.82rem;"><em>* Accounts created by Secretary in Dashboard can also log in here with generated demo credentials!</em></p>
+        </div>
+        <div class="form-actions">
+          <button class="portal-back-btn" type="button" data-back-portal="true">← Back</button>
+          <button class="primary-button" type="submit">Login</button>
+        </div>
+      </form>
+
+      <form id="secretaryLoginForm" class="demo-login-form hidden" autocomplete="off">
+        <h3>Society Secretary Login</h3>
+        <label>
+          <span>Email / Username</span>
+          <input id="secretaryIdentifier" type="text" name="identifier" placeholder="Enter email or username" required>
+        </label>
+        <label>
+          <span>Password</span>
+          <input id="secretaryPassword" type="password" name="password" placeholder="Enter demo password" required>
+        </label>
+        <div class="demo-credentials-box">
+          <strong>DEMO Secretary Accounts</strong>
+          <p>suresh@example.com / demo123 — ABC Heights</p>
+          <p>meena@example.com / demo123 — Shree Ganesh Society</p>
+          <p>rajesh@example.com / demo123 — Green Valley Society</p>
+          <p>sunita@example.com / demo123 — Laxmi Residency</p>
+        </div>
+        <div class="form-actions">
+          <button class="portal-back-btn" type="button" data-back-portal="true">← Back</button>
+          <button class="primary-button" type="submit">Login</button>
+         
+        </div>
+      </form>
+
+      <form id="adminLoginForm" class="demo-login-form hidden" autocomplete="off">
+        <h3>Admin / Municipal Authority Login</h3>
+        <label>
+          <span>Username</span>
+          <input id="adminUsername" type="text" name="username" placeholder="Enter admin username" required>
+        </label>
+        <label>
+          <span>Password</span>
+          <input id="adminPassword" type="password" name="password" placeholder="Enter admin password" required>
+        </label>
+        <div class="demo-credentials-box">
+          <strong>DEMO Admin Account</strong>
+          <p>admin / admin123</p>
+        </div>
+        <div class="form-actions">
+          <button class="portal-back-btn" type="button" data-back-portal="true">← Back</button>
+          <button class="primary-button" type="submit">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    (function () {
+      var D = window.DEMO_DATA;
+      var loginButton = document.getElementById("loginButton");
+      var loginNavLink = document.getElementById("loginNavLink");
+      var dashboardLoginNav = document.getElementById("dashboardLoginNav");
+      var exploreDashboardButton = document.getElementById("exploreDashboardButton");
+      var footerDashboardLink = document.getElementById("footerDashboardLink");
+      var openDashboardPreviewLink = document.querySelector(".dashboard-preview-card .primary-button");
+      var loginModal = document.getElementById("loginModal");
+      var portalSelection = document.getElementById("portalSelection");
+      var residentLoginForm = document.getElementById("residentLoginForm");
+      var secretaryLoginForm = document.getElementById("secretaryLoginForm");
+      var adminLoginForm = document.getElementById("adminLoginForm");
+      var themeToggle = document.getElementById("themeToggle");
+      var themeLabel = document.getElementById("themeLabel");
+
+      var allForms = [residentLoginForm, secretaryLoginForm, adminLoginForm];
+
+      function hideAllForms() {
+        allForms.forEach(function (f) {
+          if (f) f.classList.add("hidden");
+        });
+      }
+
+      D.applyThemeOnLoad();
+      D.setupThemeToggle(themeToggle, themeLabel);
+
+      function openLoginModal(directAdmin) {
+        if (!loginModal) return;
+        loginModal.classList.remove("hidden");
+        loginModal.setAttribute("aria-hidden", "false");
+        hideAllForms();
+        if (directAdmin) {
+          if (portalSelection) portalSelection.classList.add("hidden");
+          if (adminLoginForm) {
+            adminLoginForm.classList.remove("hidden");
+            var admInput = document.getElementById("adminUsername");
+            if (admInput) admInput.focus();
+          }
+        } else {
+          if (portalSelection) portalSelection.classList.remove("hidden");
+        }
+      }
+
+      function closeLoginModal() {
+        if (!loginModal) return;
+        loginModal.classList.add("hidden");
+        loginModal.setAttribute("aria-hidden", "true");
+        hideAllForms();
+      }
+
+      function showPortalSelection() {
+        hideAllForms();
+        if (portalSelection) portalSelection.classList.remove("hidden");
+      }
+
+      // Resident / Flat Owner Login
+      function handleResidentLogin(event) {
+        event.preventDefault();
+        var identifier = document.getElementById("residentIdentifier").value.trim().toLowerCase();
+        var password = document.getElementById("residentPassword").value.trim();
+        var allUsers = D.readStoredUsers();
+
+        var match = allUsers.find(function (u) {
+          var isRole = u.role === "resident" || u.role === "flat_owner";
+          var matchUsername = u.username && u.username.toLowerCase() === identifier;
+          var matchEmail = u.email && u.email.toLowerCase() === identifier;
+          var matchPhone = u.phone && u.phone.trim() === identifier;
+          return isRole && (matchUsername || matchEmail || matchPhone) && u.password === password;
+        });
+
+        if (!match) {
+          window.alert("Invalid demo credentials. Please enter a valid registered username/email/phone and password.");
+          return;
+        }
+
+        var society = D.getSocietyById(match.societyId);
+        D.setLoginSession("resident", match.id, society ? society.name : "");
+        closeLoginModal();
+        window.location.href = "society-dashboard.html";
+      }
+
+      // Secretary Login
+      function handleSecretaryLogin(event) {
+        event.preventDefault();
+        var identifier = document.getElementById("secretaryIdentifier").value.trim().toLowerCase();
+        var password = document.getElementById("secretaryPassword").value.trim();
+        var allUsers = D.readStoredUsers();
+
+        var match = allUsers.find(function (u) {
+          var isRole = u.role === "secretary";
+          var matchUsername = u.username && u.username.toLowerCase() === identifier;
+          var matchEmail = u.email && u.email.toLowerCase() === identifier;
+          return isRole && (matchUsername || matchEmail) && u.password === password;
+        });
+
+        if (!match) {
+          window.alert("Demo login failed. Please use one of the sample secretary accounts shown in the form.");
+          return;
+        }
+
+        var society = D.getSocietyById(match.societyId);
+        D.setLoginSession("secretary", match.id, society ? society.name : "");
+        closeLoginModal();
+        window.location.href = "secretary-dashboard.html";
+      }
+
+      // Admin Login
+      function handleAdminLogin(event) {
+        event.preventDefault();
+        var username = document.getElementById("adminUsername").value.trim();
+        var password = document.getElementById("adminPassword").value.trim();
+        if (username === "admin" && password === "admin123") {
+          D.setLoginSession("admin", "ADMIN", "");
+          closeLoginModal();
+          window.location.href = "dashboard.html";
+          return;
+        }
+        window.alert("Demo admin login failed. Use username: admin and password: admin123");
+      }
+
+      // Event Listeners
+      if (loginButton) loginButton.addEventListener("click", function () { openLoginModal(false); });
+      if (exploreDashboardButton) exploreDashboardButton.addEventListener("click", function () { openLoginModal(false); });
+      if (openDashboardPreviewLink) {
+        openDashboardPreviewLink.addEventListener("click", function (e) {
+          e.preventDefault();
+          openLoginModal(false);
+        });
+      }
+      if (dashboardLoginNav) {
+        dashboardLoginNav.addEventListener("click", function (e) {
+          e.preventDefault();
+          openLoginModal(true);
+        });
+      }
+      if (loginNavLink) {
+        loginNavLink.addEventListener("click", function (e) {
+          e.preventDefault();
+          openLoginModal(false);
+        });
+      }
+      if (footerDashboardLink) {
+        footerDashboardLink.addEventListener("click", function (e) {
+          e.preventDefault();
+          openLoginModal(true);
+        });
+      }
+
+      document.querySelectorAll("[data-close-login='true']").forEach(function (el) {
+        el.addEventListener("click", closeLoginModal);
+      });
+
+      // Back buttons
+      document.querySelectorAll("[data-back-portal='true']").forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+          e.preventDefault();
+          showPortalSelection();
+        });
+      });
+
+      // Portal option buttons
+      document.querySelectorAll("[data-portal]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          var portal = button.dataset.portal;
+          if (portalSelection) portalSelection.classList.add("hidden");
+          hideAllForms();
+          if (portal === "resident" && residentLoginForm) {
+            residentLoginForm.classList.remove("hidden");
+            var input = document.getElementById("residentIdentifier");
+            if (input) input.focus();
+          } else if (portal === "secretary" && secretaryLoginForm) {
+            secretaryLoginForm.classList.remove("hidden");
+            var inputSec = document.getElementById("secretaryIdentifier");
+            if (inputSec) inputSec.focus();
+          } else if (adminLoginForm) {
+            adminLoginForm.classList.remove("hidden");
+            var inputAdm = document.getElementById("adminUsername");
+            if (inputAdm) inputAdm.focus();
+          }
+        });
+      });
+
+      if (residentLoginForm) residentLoginForm.addEventListener("submit", handleResidentLogin);
+      if (secretaryLoginForm) secretaryLoginForm.addEventListener("submit", handleSecretaryLogin);
+      if (adminLoginForm) adminLoginForm.addEventListener("submit", handleAdminLogin);
+    })();
+  </script>
+</body>
+</html>
